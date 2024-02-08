@@ -9,7 +9,7 @@ const postControllers = {
   // get logged-in user's posts
   get: async (req, res, next) => {
     try {
-      const posts = await Post.findAll({ where: { userId: req.user } });
+      const posts = await Post.findAll({ where: { userId: req.user }, order: [["createdAt", "DESC"]], });
 
       if (!posts.length) {
         return sendError("No posts found!", 404, res);
@@ -36,6 +36,7 @@ const postControllers = {
         userId: req.user,
       });
 
+      // storing image
       if (req.file) {
         const ext = path.extname(req.file.originalname).toLowerCase();
         const fileName = `${post.ext_id}${ext}`;
@@ -152,6 +153,7 @@ const postControllers = {
       const posts = await Post.findAll({
         offset: offset,
         limit: per_page,
+        order: [["createdAt", "DESC"]],
         include: User,
       });
 

@@ -1,0 +1,1 @@
+CREATE DATABASE IF NOT EXISTS `simple_post_comments_service`;

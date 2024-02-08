@@ -9,6 +9,7 @@ const authControllers = {
     try {
       const { username, password } = req.body;
 
+      // input validations
       if (!(username && password)) {
         return sendError("Username and password are required!", 400, res);
       }
@@ -27,11 +28,13 @@ const authControllers = {
         return sendError("Username already taken!", 409, res);
       }
 
+      // inserting into db
       const user = await User.create({
         username,
         password: await hash(password),
       });
 
+      // signing the jwt token
       const token = sign({ sub: username });
 
       res.json(mapUser({ ...user.toJSON(), token }));
@@ -58,6 +61,7 @@ const authControllers = {
         return sendError("User not found!", 404, res);
       }
 
+      // verifying password using the hash
       if (!(await verifyHash(password, user.password))) {
         return sendError("Incorrect password!", 401, res);
       }

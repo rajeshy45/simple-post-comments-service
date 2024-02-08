@@ -37,7 +37,11 @@ const userControllers = {
 
       const offset = (page - 1) * per_page;
 
-      const users = await User.findAll({ offset: offset, limit: per_page });
+      const users = await User.findAll({
+        offset: offset,
+        limit: per_page,
+        order: [["createdAt", "DESC"]],
+      });
 
       res.json(users.map((user) => user.toJSON()).map(mapUser));
     } catch (err) {

@@ -134,6 +134,7 @@ const commentControllers = {
         where: {
           postId: post.id,
         },
+        order: [["createdAt", "DESC"]],
         include: User,
       });
 

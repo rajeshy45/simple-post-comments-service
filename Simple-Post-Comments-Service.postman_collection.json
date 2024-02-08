@@ -1,0 +1,696 @@
+{
+	"info": {
+		"_postman_id": "3a220f0a-7005-4ad1-bc8d-2438a749a7c5",
+		"name": "Simple-Post-Comments-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28042578"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "Get All",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								},
+								"description": "This endpoint makes an HTTP GET request to retrieve a list of users from the server. The response will be in JSON format and will include an array of user objects, each containing the user's ID, username, creation date, and last update date."
+							},
+							"response": []
+						},
+						{
+							"name": "Get One",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:userId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "{{userId}}",
+											"description": "External ID of the user"
+										}
+									]
+								},
+								"description": "This endpoint retrieves user information based on the provided user ID. Upon a successful execution, the server responds with a status code of 200 and a JSON object containing the user's ID, username, creation timestamp, and update timestamp."
+							},
+							"response": []
+						},
+						{
+							"name": "Get logged in user",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"me"
+									]
+								},
+								"description": "# Get Current User Details\n\nThis endpoint is used to retrieve the details of the currently authenticated user.\n\n## Request\n\n### HTTP Request\n\n`GET {{baseUrl}}/users/me`\n\n## Response\n\n- Status: 200\n- Content-Type: application/json\n    \n\n``` json\n{\n  \"id\": \"\",\n  \"username\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\"\n}\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete logged in user",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"me"
+									]
+								},
+								"description": "\nThis endpoint is used to delete the currently authenticated user's account. Upon successful execution, the server returns a 200 status with a response in XML format.\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"rajesh\",\r\n    \"password\": \"rajesh123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								},
+								"description": "\n    \n# Register User\n\nThis endpoint allows the client to register a new user by providing a username and password.\n\n## Request\n\n`POST /auth/register`\n\n### Request Body\n- `username` (string, required): The username of the user.\n- `password` (string, required): The password for the user account.\n\nExample:\n```json\n{\n    \"username\": \"\",\n    \"password\": \"\"\n}\n```\n\n## Response\n\n- `id` (string): The unique identifier of the user.\n- `username` (string): The username of the registered user.\n- `updatedAt` (string): The timestamp when the user record was last updated.\n- `createdAt` (string): The timestamp when the user record was created.\n- `token` (string): The authentication token for the registered user.\n\nExample:\n```json\n{\n    \"id\": \"\",\n    \"username\": \"\",\n    \"updatedAt\": \"\",\n    \"createdAt\": \"\",\n    \"token\": \"\"\n}\n```\n\n"
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"rajesh\",\r\n    \"password\": \"rajesh123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								},
+								"description": "\nThis endpoint allows users to authenticate and login to the system. The HTTP POST request should be made to {{baseUrl}}/auth/login with a raw request body type. The request body should include the username and password parameters.\n\n### Request Body\n- `username` (string): The username of the user.\n- `password` (string): The password of the user.\n\n### Response\nUpon a successful login, the endpoint returns a status code of 200 and a JSON response with the following fields:\n- `id` (string): The user's ID.\n- `username` (string): The username of the user.\n- `createdAt` (string): The timestamp when the user account was created.\n- `updatedAt` (string): The timestamp when the user account was last updated.\n- `token` (string): The authentication token for the user session.\n\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "posts",
+					"item": [
+						{
+							"name": "Create a new post",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"My First Post\",\r\n    \"description\": \"Description of my first post.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts"
+									]
+								},
+								"description": "\n### Add New Post\n\nThis endpoint allows you to add a new post.\n\n#### Request Body\n- `title` (string, required): The title of the post.\n- `description` (string, required): The description of the post.\n\n#### Response\n- Status: 200 OK\n- Content-Type: application/json\n- `image` (string): The image associated with the post, if any.\n- `id` (string): The unique identifier of the newly added post.\n- `title` (string): The title of the newly added post.\n- `description` (string): The description of the newly added post.\n- `updatedAt` (string): The timestamp when the post was last updated.\n- `createdAt` (string): The timestamp when the post was created.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Get logged in user's posts",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										"me"
+									]
+								},
+								"description": "\nThis endpoint retrieves the posts created by the authenticated user. The response will include an array of posts, where each post object contains the unique identifier, title, description, image URL (if available), creation timestamp, and last update timestamp.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Get All",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts?page=1&per_page=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								},
+								"description": "\nThis endpoint retrieves a list of posts with pagination support. It makes an HTTP GET request to the specified URL with the query parameters 'page' and 'per_page' to control the pagination. The response will contain a JSON array of posts, each with an 'id', 'title', 'description', 'image', 'createdAt', 'updatedAt', and 'user' object containing 'id', 'username', 'createdAt', and 'updatedAt' properties.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Get One",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the post"
+										}
+									]
+								},
+								"description": "\nThis API endpoint retrieves a specific post based on the provided postId. The response will include the post's id, title, description, image, creation timestamp, update timestamp, and user details such as id, username, creation timestamp, and update timestamp.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete One",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the post"
+										}
+									]
+								},
+								"description": "This endpoint sends an HTTP DELETE request to delete a specific post identified by the postId parameter in the URL.\n\n### Request Parameters\n\n- postId: The ID of the post to be deleted.\n    \n\n### Response\n\nThe response returns a status code of 200 and the content type is text/xml."
+							},
+							"response": []
+						},
+						{
+							"name": "Update a post",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Updated Post Title\",\r\n    \"description\": \"Updated description.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the post"
+										}
+									]
+								},
+								"description": "\nThis endpoint allows you to update a specific post identified by the postId in the URL.\n\n### Request Body\n- **title** (string, required): The title of the post.\n- **description** (string, required): The description of the post.\n\n### Response\n- **Status**: 200\n- **Content-Type**: text/xml\n\nThe response body for this request is null.\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "comments",
+					"item": [
+						{
+							"name": "Create a new comment",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"My first comment.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId",
+										"comments"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the post"
+										}
+									]
+								},
+								"description": "\nThis endpoint makes an HTTP POST request to add a comment to a specific post. The request should be made to {{baseUrl}}/posts/:postId/comments, where :postId is the identifier of the post to which the comment is being added.\n\nThe request body should be in raw format and include a parameter \"text\" which represents the content of the comment.\n\n### Request Body\n- text (string, required): The content of the comment.\n\nThe response to the request will have a status code of 200 and a content type of application/json. The body of the response will include the details of the newly added comment, including its unique identifier \"id\", the \"text\" content, \"updatedAt\" timestamp, and \"createdAt\" timestamp.\n\n### Response Body\n- id (string): The unique identifier of the newly added comment.\n- text (string): The content of the comment.\n- updatedAt (string): The timestamp when the comment was last updated.\n- createdAt (string): The timestamp when the comment was created.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Get all comments of a post",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId/comments",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId",
+										"comments"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the post"
+										}
+									]
+								},
+								"description": "\nThis endpoint retrieves the comments associated with a specific post identified by the postId parameter. The response will contain an array of comment objects, each including the comment's id, text, creation and update timestamps, as well as user details such as id, username, and timestamps for user creation and update.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Update a comment",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"Updated comment.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId/comments/:commentId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId",
+										"comments",
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the Post"
+										},
+										{
+											"key": "commentId",
+											"value": "{{commentId}}",
+											"description": "External ID of the Comment"
+										}
+									]
+								},
+								"description": "\nThis endpoint allows you to update a specific comment associated with a post. \n\n### Request Body\n- `text` (string, required): The updated text for the comment.\n\n### Response\n- Status: 200\n- Content-Type: text/xml\n- Response Body: null\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a comment",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/posts/:postId/comments/:commentId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts",
+										":postId",
+										"comments",
+										":commentId"
+									],
+									"variable": [
+										{
+											"key": "postId",
+											"value": "{{postId}}",
+											"description": "External ID of the post"
+										},
+										{
+											"key": "commentId",
+											"value": "{{commentId}}",
+											"description": "External ID of the comment"
+										}
+									]
+								},
+								"description": "\nThis endpoint sends an HTTP DELETE request to delete a specific comment (:commentId) associated with a post (:postId). The response returned a status code of 200 and the content type is 'text/xml'.\n"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

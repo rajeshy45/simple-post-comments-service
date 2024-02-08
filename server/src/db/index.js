@@ -1,21 +1,9 @@
 const { Sequelize } = require("sequelize");
-const mysql = require("mysql2/promise");
 
 const db = process.env.DB_NAME;
 const user = process.env.DB_USER;
 const password = process.env.DB_PASSWORD;
 const host = process.env.DB_HOST;
-
-// creating database if not exists
-(async () => {
-  const connection = await mysql.createConnection({
-    host: host,
-    user: user,
-    password: password,
-  });
-  await connection.query(`CREATE DATABASE IF NOT EXISTS \`${db}\`;`);
-  await connection.end();
-})();
 
 // connecting to database
 const sequelize = new Sequelize(db, user, password, {
@@ -23,8 +11,8 @@ const sequelize = new Sequelize(db, user, password, {
   dialect: "mysql",
 });
 
-// testing db connection
 (async () => {
+  // testing db connection
   try {
     await sequelize.authenticate();
     console.log("Database connection has been established successfully.");
@@ -34,3 +22,4 @@ const sequelize = new Sequelize(db, user, password, {
 })();
 
 module.exports = sequelize;
+
