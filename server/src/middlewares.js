@@ -1,0 +1,70 @@
+const cors = require("cors");
+const routes = require("./routes");
+const bodyParser = require("body-parser");
+const { verify } = require("./utils/jwt");
+const User = require("./models/user");
+const { sendError } = require("./utils/utils");
+
+function config(app) {
+  // adding body parser middleware
+  app.use(bodyParser.json());
+
+  // enabling cors
+  app.use(cors());
+
+  // logging information about request
+  app.use((req, res, next) => {
+    console.log("Path:", req.path);
+    console.log("Original URL:", req.originalUrl);
+
+    next();
+  });
+
+  // checking for authorization token
+  app.use(async (req, res, next) => {
+    // no token needed for auth routes
+    if (req.path === "/api/v1" || req.path.includes("/auth/")) {
+      next();
+    } else {
+      const token = req.get("Authorization");
+
+      // decoding the jwt token
+      const decoded = verify(token);
+
+      if (!decoded) {
+        res.status(401).send();
+      } else {
+        const user = await User.findOne({
+          attributes: ["id"],
+          where: { username: decoded.sub },
+        });
+
+        if (!user) {
+          res.status(401).send();
+        } else {
+          req.user = user.id;
+          next();
+        }
+      }
+    }
+  });
+
+  // adding routes
+  app.use("/api", routes);
+
+  // error handler
+  app.use((err, req, res, next) => {
+    if (!err) return next();
+
+    console.log(err);
+
+    // respond with error
+    return sendError(
+      "Something went wrong! Please report this incident to the team to investigate further.",
+      err.status || 500,
+      res
+    );
+  });
+}
+
+module.exports = { config };
