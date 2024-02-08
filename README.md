@@ -15,7 +15,7 @@ A simple post-comments service web app with Next.js frontend and Node.js backend
 
 - Rename the ```.env.dist``` file to ```.env``` in both client and server folders.
 - In Windows machine, run the file ```run.bat``` in the root folder.
-- In Linux or max, run the file ```run.sh``` in the root folder.
+- In Linux or mac, run the file ```run.sh``` in the root folder.
 - If there is any error while running these files, try running the commands in the file manually.
 
 ## Run client and server separately
