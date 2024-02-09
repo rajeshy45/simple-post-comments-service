@@ -32,7 +32,7 @@ function config(app) {
       const decoded = verify(token);
 
       if (!decoded) {
-        res.status(401).send();
+        return sendError("Unauthorized! Please login again.", 401, res);
       } else {
         const user = await User.findOne({
           attributes: ["id"],
@@ -40,7 +40,7 @@ function config(app) {
         });
 
         if (!user) {
-          res.status(401).send();
+          return sendError("Unauthorized! Please login again.", 401, res);
         } else {
           req.user = user.id;
           next();
